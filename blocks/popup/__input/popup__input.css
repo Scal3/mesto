@@ -1,0 +1,23 @@
+.popup__input {
+    width: 238px;
+    border: none;
+    border-bottom: 1px solid #000000;
+    border-color: rgb(0,0,0,0.3);
+    margin-bottom: 30px;
+    margin-left: 22px;
+    color: #000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.popup__input:last-of-type {
+    margin-bottom: 0;
+}
+
+@media screen and (min-width: 880px) {
+    .popup__input {
+        width: 358px;
+        margin-left: 36px;
+    }
+}
