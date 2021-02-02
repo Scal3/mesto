@@ -9,7 +9,7 @@
 <body class="page">
   <!-- header с логотипом -->
   <header class="header header_top_margin">
-    <img class="header__logo" src="./images/logo.png" alt="логотип">
+    <div class="header__logo"></div>
   </header>
   <main class="main">
     <!-- секция профиля -->
@@ -18,7 +18,7 @@
         <img src="./images/profile-image.jpg" alt="фото профиля" class="profile__avatar">
         <div class="profile__xl-second-container">
           <div class="profile__name-and-button">
-            <h2 class="profile__name">Жак&#8209;Ив Кусто</h2>
+            <h1 class="profile__name">Жак&#8209;Ив Кусто</h1>
             <button class="profile__editButton"></button>
           </div>
           <p class="profile__job">Исследователь океана</p>
@@ -81,8 +81,8 @@
       <button class="popup__close-button"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
       <form class="popup__form">
-        <input type="text" class="popup__input popup__one-input">
-        <input type="text" class="popup__input popup__sec-input">
+        <input type="text" class="popup__input popup__input_type_name" value="Жак&#8209;Ив Кусто">
+        <input type="text" class="popup__input popup__input_type_job" value="Исследователь океана">
         <button type="submit" class="popup__submit"></button>
       </form>
     </div>
