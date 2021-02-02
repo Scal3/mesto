@@ -14,19 +14,11 @@ function SwitchLikeColor(){
 }
 
 popupButton.addEventListener('click', togglePopupWindow);
+popupCloseButton.addEventListener('click', togglePopupWindow);
 popupSubmitButton.addEventListener('click', togglePopupWindow);
 function togglePopupWindow(){
     popup.classList.toggle('popup_opened');
 }
-
-let chlen = 
-
-popupCloseButton.addEventListener('click', togglePopupWindowForCloseButton);
-function togglePopupWindowForCloseButton(){
-    popup.classList.toggle('popup_opened');
-}
-
-
 
 const popupForm = document.querySelector('.popup__form');
 popupForm.addEventListener('submit', handleFormSubmit);
