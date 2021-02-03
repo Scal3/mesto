@@ -9,6 +9,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    font-family: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
 }
 
 .popup__input:last-of-type {

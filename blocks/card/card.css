@@ -3,7 +3,7 @@
     width: 282px;
     border-radius: 4%;
     margin: 0 auto;
-    height: 361px;
+    min-height: 361px;
 }
 
 @media screen and (min-width:880px) {

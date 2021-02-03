@@ -8,7 +8,5 @@
     .profile__name-and-button {
         margin-top: 22px;
         margin-bottom: 16px;
-        display: flex;
-        justify-content: space-between;
     }
 }
