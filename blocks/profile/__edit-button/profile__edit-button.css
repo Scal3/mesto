@@ -2,7 +2,7 @@
     background-image: url(../../../images/Edit-Button.svg);
     background-repeat: no-repeat;
     background-size: contain;
-    width: 18px;
+    min-width: 18px;
     height: 18px;
     border: none;
     background-color: transparent;

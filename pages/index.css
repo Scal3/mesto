@@ -21,7 +21,7 @@
 @import url(../blocks/card/__title/card__title.css);
 @import url(../blocks/card/__like-button/card__like-button.css);
 @import url(../blocks/card/_margin/card_margin_bottom.css);
-@import url(../blocks/card/__title-and-button/card__title_and_button.css);
+@import url(../blocks/card/__title-and-button/card__title-and-button.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/_margin_top/footer_margin_top.css);
 @import url(../blocks/footer/__copy/footer__copy.css);
