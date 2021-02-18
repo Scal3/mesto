@@ -3,4 +3,10 @@
     height: 282px;
     object-fit: cover;
     object-position: center;
+    border-top-left-radius: 4%;
+    border-top-right-radius: 4%;
+}
+
+.card__image:hover {
+    cursor: pointer;
 }
