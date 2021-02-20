@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
   <link rel="stylesheet" href="pages/index.css">
+  <script src="scripts/initial-сards.js" defer></script>
   <script src="scripts/index.js" defer></script>
 </head>
 <body class="page">
@@ -34,31 +35,31 @@
   <footer class="footer footer_margin_top">
     <p class="footer__copy">&copy;2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_type_profile">
     <div class="popup__container">
-      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      <button class="popup__close-button popup__close-button_type_profile" type="button" aria-label="Закрыть"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form" name="profile-form">
+      <form class="popup__form popup__form_type_profile" name="profile-form">
         <input type="text" required class="popup__input popup__input_type_name" value="" name="name" placeholder="Введите ваше имя">
         <input type="text" required class="popup__input popup__input_type_job" value="" name="job" placeholder="Введите вашу профессию">
         <button type="submit" class="popup__submit">Сохранить</button>
       </form>
     </div>
   </div>
-  <div class="card-popup">
-    <div class="card-popup__container">
-      <button class="card-popup__close-button" type="button" aria-label="Закрыть"></button>
-      <h2 class="card-popup__heading">Новое место</h2>
-      <form class="card-popup__form" name="card-form">
-        <input type="text" required class="card-popup__input card-popup__input_type_name" value="" name="name" placeholder="Название">
-        <input type="text" required class="card-popup__input card-popup__input_type_link" value="" name="link" placeholder="Ссылка на картинку">
-        <button type="submit" class="card-popup__submit">Сохранить</button>
+  <div class="popup popup_type_card">
+    <div class="popup__container">
+      <button class="popup__close-button popup__close-button_type_card" type="button" aria-label="Закрыть"></button>
+      <h2 class="popup__heading">Новое место</h2>
+      <form class="popup__form popup__form_type_card" name="card-form">
+        <input type="text" required class="popup__input popup__input_type_title" value="" name="name" placeholder="Название">
+        <input type="text" required class="popup__input popup__input_type_link" value="" name="link" placeholder="Ссылка на картинку">
+        <button type="submit" class="popup__submit popup__submit_type_card">Сохранить</button>
       </form>
     </div>
   </div>
-  <div class="image-popup">
+  <div class="image-popup popup popup_type_image">
     <div class="image-popup__container">
-    <button class="image-popup__close-button" type="button" aria-label="Закрыть"></button>
+    <button class="popup__close-button popup__close-button_type_image" type="button" aria-label="Закрыть"></button>
     <img src="image" alt="image" class="image-popup__image">
     <h2 class="image-popup__title"></h2>
     </div>

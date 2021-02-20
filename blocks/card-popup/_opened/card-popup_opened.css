@@ -1,6 +1,0 @@
-.card-popup_opened {
-    display: flex;
-    visibility: visible;
-    opacity: 1;
-    transition: 0.5s linear;
-}
