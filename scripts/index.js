@@ -18,6 +18,7 @@ const cardCloseButton = document.querySelector('.popup__close-button_type_card')
 const cardTitleInput = document.querySelector('.popup__input_type_title');
 const cardLinkInput = document.querySelector('.popup__input_type_link');
 const cardPopupForm = document.querySelector('.popup__form_type_card');
+const popup = document.querySelectorAll('.popup');
 
 
 
@@ -64,14 +65,17 @@ function dynamicRender() {
   cardsContainer.append(...cardList);
 }
 
-function openPopupWindow() {
+function setInputValue() {
   typeName.value = profileName.textContent;
   typeJob.value = profileJob.textContent;
+}
+
+function openPopupWindow() {
+  setInputValue();
   openPopup(profilePopup);
 }
 
-function handleFormProfile(event) {
-  event.preventDefault();
+function handleFormProfile() {
   profileName.textContent = typeName.value;
   profileJob.textContent = typeJob.value;
   closePopup(profilePopup);
@@ -84,7 +88,7 @@ function handleFormCard(evt) {
   const item = createCard({ name: inputName, link: inputLink });
   cardsContainer.prepend(item);
   cardPopupForm.reset();
-
+  closePopup(cardPopup);
 }
 
 function handleDeleteCard(event) {
@@ -93,14 +97,36 @@ function handleDeleteCard(event) {
   item.remove();
 }
 
+function closePopupOnButton(evt) {
+  if (evt.keyCode === 27) {
+    popup.forEach((popupItem) => {
+      popupItem.classList.remove('popup_opened');
+    })
+  }
+}
 
-// функции открытия попапа
+function closePopupOverlay(event) {
+  if (event.target === event.currentTarget) {
+    popup.forEach((popupItem) => {
+      popupItem.classList.remove('popup_opened');
+    })
+  }
+}
+
 function openPopup(popupItem) {
-  return popupItem.classList.add('popup_opened'); //добавляем к popup класс popup_opened
+  popupItem.classList.add('popup_opened'); //добавляем к popup класс popup_opened
+  document.addEventListener('keyup', closePopupOnButton);
+  popup.forEach((item) => {
+    item.addEventListener('mousedown', closePopupOverlay);
+  })
 }
 
 function closePopup(popupItem) {
-  return popupItem.classList.remove('popup_opened'); //удаляем у popup класс popup_opened
+  popupItem.classList.remove('popup_opened'); //удаляем у popup класс popup_opened
+  document.removeEventListener('keyup', closePopupOnButton);
+  popup.forEach((item) => {
+    item.removeEventListener('mousedown', closePopupOverlay);
+  })
 }
 
 
@@ -111,7 +137,9 @@ cardCloseButton.addEventListener('click', () => closePopup(cardPopup));
 profilePopupButton.addEventListener('click', openPopupWindow);
 profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup));
 profilePopupForm.addEventListener('submit', handleFormProfile);
-imageCloseButton.addEventListener('click',() => closePopup(imagePopup));
+imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
 
 
+
+setInputValue();
 dynamicRender();

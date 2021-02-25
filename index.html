@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
   <link rel="stylesheet" href="pages/index.css">
   <script src="scripts/initial-сards.js" defer></script>
   <script src="scripts/index.js" defer></script>
+  <script src="scripts/validate.js" defer></script>
 </head>
 <body class="page">
   <!-- header с логотипом -->
@@ -39,10 +40,19 @@
     <div class="popup__container">
       <button class="popup__close-button popup__close-button_type_profile" type="button" aria-label="Закрыть"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form popup__form_type_profile" name="profile-form">
-        <input type="text" required class="popup__input popup__input_type_name" value="" name="name" placeholder="Введите ваше имя">
-        <input type="text" required class="popup__input popup__input_type_job" value="" name="job" placeholder="Введите вашу профессию">
-        <button type="submit" class="popup__submit">Сохранить</button>
+      <form class="popup__form popup__form_type_profile" name="profile-form" method="POST" action="#" novalidate autocomplete="off">
+        <fieldset class="popup__set">
+          <div class="popup__section">
+            <input type="text" required class="popup__input popup__input_type_name" value="" name="name" placeholder="Введите ваше имя" required minlength="2" maxlength="40">
+            <span class="popup__input-error popup__input-error_position_up"></span>
+          </div>
+
+          <div class="popup__section">
+            <input type="text" required class="popup__input popup__input_type_job" value="" name="job" placeholder="Введите вашу профессию" required minlength="2" maxlength="200">
+            <span class="popup__input-error popup__input-error_position_dawn"></span>
+          </div>
+          <button type="submit" class="popup__submit">Сохранить</button>
+      </fieldset>
       </form>
     </div>
   </div>
@@ -50,10 +60,19 @@
     <div class="popup__container">
       <button class="popup__close-button popup__close-button_type_card" type="button" aria-label="Закрыть"></button>
       <h2 class="popup__heading">Новое место</h2>
-      <form class="popup__form popup__form_type_card" name="card-form">
-        <input type="text" required class="popup__input popup__input_type_title" value="" name="name" placeholder="Название">
-        <input type="text" required class="popup__input popup__input_type_link" value="" name="link" placeholder="Ссылка на картинку">
-        <button type="submit" class="popup__submit popup__submit_type_card">Сохранить</button>
+      <form class="popup__form popup__form_type_card" name="card-form" method="POST" action="#" novalidate autocomplete="off">
+        <fieldset class="popup__set">
+          <div class="popup__section">
+            <input type="text" required class="popup__input popup__input_type_title" value="" name="name" placeholder="Название" required minlength="2" maxlength="30">
+            <span class="popup__input-error popup__input-error_position_up"></span>
+          </div>
+
+          <div class="popup__section">
+            <input type="url" required class="popup__input popup__input_type_link" value="" name="link" placeholder="Ссылка на картинку" required>
+            <span class="popup__input-error popup__input-error_position_dawn"></span>
+          </div>
+          <button type="submit" class="popup__submit popup__submit_type_card">Создать</button>
+      </fieldset>
       </form>
     </div>
   </div>
