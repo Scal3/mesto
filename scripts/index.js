@@ -18,8 +18,11 @@ const cardCloseButton = document.querySelector('.popup__close-button_type_card')
 const cardTitleInput = document.querySelector('.popup__input_type_title');
 const cardLinkInput = document.querySelector('.popup__input_type_link');
 const cardPopupForm = document.querySelector('.popup__form_type_card');
-const popup = document.querySelectorAll('.popup');
+const popupList = document.querySelectorAll('.popup');
+const escapeButtonKeyCode = 27;
 
+
+const submitButton = document.querySelector('.popup__submit');
 
 
 function addLike(evt) {
@@ -58,20 +61,20 @@ function createCard(item) {
   return templateEl;
 }
 
-function dynamicRender() {
+function addCard() {
   //скопировали массив и сказали ему применить для каждого элемента функцию getItem
   const cardList = initialCards.map(createCard);
   //разбили данные массива на строки и сказали добовлять новые карточки вначало контейнера 
   cardsContainer.append(...cardList);
 }
 
-function setInputValue() {
+function setProfileInputs() {
   typeName.value = profileName.textContent;
   typeJob.value = profileJob.textContent;
 }
 
-function openPopupWindow() {
-  setInputValue();
+function openProfilePopup() {
+  setProfileInputs();
   openPopup(profilePopup);
 }
 
@@ -81,8 +84,7 @@ function handleFormProfile() {
   closePopup(profilePopup);
 }
 
-function handleFormCard(evt) {
-  evt.preventDefault();
+function handleFormCard() {
   const inputName = cardTitleInput.value;
   const inputLink = cardLinkInput.value;
   const item = createCard({ name: inputName, link: inputLink });
@@ -97,49 +99,50 @@ function handleDeleteCard(event) {
   item.remove();
 }
 
-function closePopupOnButton(evt) {
-  if (evt.keyCode === 27) {
-    popup.forEach((popupItem) => {
-      popupItem.classList.remove('popup_opened');
-    })
+function closePopupOnButton(event) {
+  if (event.keyCode === escapeButtonKeyCode) {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 }
 
 function closePopupOverlay(event) {
   if (event.target === event.currentTarget) {
-    popup.forEach((popupItem) => {
-      popupItem.classList.remove('popup_opened');
-    })
+    closePopup(event.currentTarget);
   }
 }
 
 function openPopup(popupItem) {
   popupItem.classList.add('popup_opened'); //добавляем к popup класс popup_opened
   document.addEventListener('keyup', closePopupOnButton);
-  popup.forEach((item) => {
-    item.addEventListener('mousedown', closePopupOverlay);
-  })
 }
 
 function closePopup(popupItem) {
   popupItem.classList.remove('popup_opened'); //удаляем у popup класс popup_opened
   document.removeEventListener('keyup', closePopupOnButton);
-  popup.forEach((item) => {
-    item.removeEventListener('mousedown', closePopupOverlay);
-  })
+}
+
+function offSubmitButton() {
+  const popupSubmit = document.querySelector('.popup__submit_type_card');
+  popupSubmit.setAttribute('disabled', true);
+  popupSubmit.classList.add('popup__submit_inactive');
 }
 
 
 
+cardAddButton.addEventListener('click', offSubmitButton);
 cardPopupForm.addEventListener('submit', handleFormCard);
 cardAddButton.addEventListener('click', () => openPopup(cardPopup));
 cardCloseButton.addEventListener('click', () => closePopup(cardPopup));
-profilePopupButton.addEventListener('click', openPopupWindow);
+profilePopupButton.addEventListener('click', openProfilePopup);
 profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup));
 profilePopupForm.addEventListener('submit', handleFormProfile);
 imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
+popupList.forEach((item) => { 
+  item.addEventListener('click', closePopupOverlay); 
+}); 
 
 
 
-setInputValue();
-dynamicRender();
+setProfileInputs();
+addCard();

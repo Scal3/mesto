@@ -24,8 +24,9 @@ const checkInputValidity = (formElement, inputElement, inputErrorClass, errorCla
     }
 };
 
+const findAtLeastOneInvalid = (inputElement) => !inputElement.validity.valid;
+
 const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
-    const findAtLeastOneInvalid = (inputElement) => !inputElement.validity.valid;
     const hasInvalidInput = inputList.some(findAtLeastOneInvalid);
 
     if (hasInvalidInput) {
@@ -42,7 +43,6 @@ const handleFormSubmit = (event) => {
 };
 
 const setEventListeners = (formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass) => {
-
     formElement.addEventListener('submit', handleFormSubmit);
 
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
