@@ -16,35 +16,34 @@ const profileName = document.querySelector('.profile__name')
 const profileJob = document.querySelector('.profile__job')
 const cardsContainer = document.querySelector('.cards')
 const cardAddButton = document.querySelector('.profile__add-button')
-export const imagePopupPhoto = document.querySelector('.image-popup__image')
-export const imagePopupTitle = document.querySelector('.image-popup__title')
-export const imagePopup = document.querySelector('.popup_type_image')
-const imageCloseButton = document.querySelector('.popup__close-button_type_image')
+const imagePopupPhoto = document.querySelector('.image-popup__image')
+const imagePopupTitle = document.querySelector('.image-popup__title')
+const imagePopup = document.querySelector('.popup_type_image')
 const profilePopup = document.querySelector('.popup_type_profile')
-const profilePopupCloseButton = document.querySelector('.popup__close-button_type_profile')
 const typeName = document.querySelector('.popup__input_type_name')
 const typeJob = document.querySelector('.popup__input_type_job')
 const profilePopupForm = document.querySelector('.popup__form_type_profile')
 const cardPopup = document.querySelector('.popup_type_card')
-const cardCloseButton = document.querySelector('.popup__close-button_type_card')
 const cardTitleInput = document.querySelector('.popup__input_type_title')
 const cardLinkInput = document.querySelector('.popup__input_type_link')
 const cardPopupForm = document.querySelector('.popup__form_type_card')
 const popupList = document.querySelectorAll('.popup')
 const escapeButtonKeyCode = 27
 const formsList = Array.from(document.querySelectorAll('.popup__form'))
+const cardImage = document.querySelector('.card__image')
 
 
+function createCard(item, template) {
+  const card = new Card(item.name, item.link, template, handleCardClick)
+  const cardElement = card.generateCard()
+  return cardElement
+}
 
 function addCard() {
   initialCards.forEach((item) => {
-    // Создадим экземпляр карточки
-    const card = new Card(item.name, item.link, '.template')
-    // Создаём карточку и возвращаем наружу
-    const cardElement = card.generateCard()
-    // Добавляем в DOM
+    const cardElement = createCard(item, '.template')
     cardsContainer.append(cardElement)
-  });
+  })
 }
 
 function addValidation() {
@@ -52,10 +51,19 @@ function addValidation() {
     const formValidator = new FormValidator(objectOptions, form)
     formValidator.enableValidation()
     form.addEventListener('submit', handleFormSubmit)
+    cardAddButton.addEventListener('click', () => formValidator.resetValidation())
+    profilePopupButton.addEventListener('click', () => formValidator.resetValidation())
   })
 }
 
-function handleFormSubmit (event) {
+function handleCardClick(name, link) {
+  imagePopupPhoto.src = link
+  imagePopupPhoto.alt = name
+  imagePopupTitle.textContent = name 
+  openPopup(imagePopup)
+}
+
+function handleFormSubmit(event) {
   event.preventDefault()
 }
 
@@ -78,8 +86,11 @@ function handleFormProfile() {
 function handleFormCard() {
   const inputName = cardTitleInput.value
   const inputLink = cardLinkInput.value
-  const card = new Card(inputName, inputLink, '.template')
-  const cardElement = card.generateCard()
+  const inputObject = {
+    name: inputName,
+    link: inputLink
+  }
+  const cardElement = createCard(inputObject, '.template')
   cardsContainer.prepend(cardElement)
   cardPopupForm.reset()
   closePopup(cardPopup)
@@ -92,13 +103,7 @@ function closePopupOnButton(event) {
   }
 }
 
-function closePopupOverlay(event) {
-  if (event.target === event.currentTarget) {
-    closePopup(event.currentTarget)
-  }
-}
-
-export function openPopup(popupItem) {
+function openPopup(popupItem) {
   popupItem.classList.add('popup_opened') //добавляем к popup класс popup_opened
   document.addEventListener('keyup', closePopupOnButton)
 }
@@ -108,24 +113,27 @@ function closePopup(popupItem) {
   document.removeEventListener('keyup', closePopupOnButton)
 }
 
-function offSubmitButton() {
-  const popupSubmit = document.querySelector('.popup__submit_type_card')
-  popupSubmit.setAttribute('disabled', true)
-  popupSubmit.classList.add('popup__submit_inactive')
+function cleansesCardPopupInput() {
+  cardTitleInput.value = ''
+  cardLinkInput.value = ''
 }
 
 
 
-cardAddButton.addEventListener('click', offSubmitButton)
+cardAddButton.addEventListener('click', cleansesCardPopupInput)
 cardPopupForm.addEventListener('submit', handleFormCard)
 cardAddButton.addEventListener('click', () => openPopup(cardPopup))
-cardCloseButton.addEventListener('click', () => closePopup(cardPopup))
 profilePopupButton.addEventListener('click', openProfilePopup)
-profilePopupCloseButton.addEventListener('click', () => closePopup(profilePopup))
 profilePopupForm.addEventListener('submit', handleFormProfile)
-imageCloseButton.addEventListener('click', () => closePopup(imagePopup))
-popupList.forEach((item) => {
-  item.addEventListener('click', closePopupOverlay)
+popupList.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+    if (evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup)
+    }
+  })
 })
 
 

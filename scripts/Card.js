@@ -1,10 +1,11 @@
-import { openPopup, imagePopupPhoto, imagePopupTitle, imagePopup } from './index.js'
+// import { openPopup, imagePopupPhoto, imagePopupTitle, imagePopup } from './index.js'
 
 export default class Card {
-    constructor(name, link, selector) {
+    constructor(name, link, selector, handleCardClick) {
         this._name = name
         this._link = link
         this._$selector = selector
+        this._handleCardClick = handleCardClick
     }
     // Функция для возврата темплейт элемента
     _getTemplate() {
@@ -26,15 +27,6 @@ export default class Card {
         const _$item = _targetEvt.closest('.card')
         _$item.remove()
     }
-    // Функция для открытия попапа
-    _openImagePopup(evt) {
-        if (evt.target.classList.contains('card__image')) {
-            openPopup(imagePopup)
-            imagePopupPhoto.src = this._link
-            imagePopupPhoto.alt = this._name
-            imagePopupTitle.textContent = this._name
-        }
-    }
     //Функция устанавливающая слушатели
     _setEventListeners() {
         // Слушатель для лайка
@@ -46,8 +38,8 @@ export default class Card {
             this._handleDeleteCard(evt)
         })
         // Слушатель для открытия попапа с картинкой
-        this._element.querySelector('.card__image').addEventListener('click', (evt) => {
-            this._openImagePopup(evt)
+        this._element.querySelector('.card__image').addEventListener('click', () => {
+            this._handleCardClick(this._name, this._link)
         })
     }
     // Функция для создания карточки

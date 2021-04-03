@@ -7,20 +7,29 @@ export default class FormValidator {
     }
     //Функция для вывода ошибки
     _showInputError(inputElement, errorMessage) {
-        const _$formSectionElement = inputElement.closest('.popup__section');
-        const _$errorElement = _$formSectionElement.querySelector('.popup__input-error');
-        _$errorElement.textContent = errorMessage;
-        _$errorElement.classList.add(this._objectOptions.errorClass);
-        inputElement.classList.add(this._objectOptions.inputErrorClass);
+        const _$formSectionElement = inputElement.closest('.popup__section')
+        const _$errorElement = _$formSectionElement.querySelector('.popup__input-error')
+        _$errorElement.textContent = errorMessage
+        _$errorElement.classList.add(this._objectOptions.errorClass)
+        inputElement.classList.add(this._objectOptions.inputErrorClass)
     }
     //Функция скрытия ошибки
     _hideInputError(inputElement) {
-        const _$formSectionElement = inputElement.closest('.popup__section');
-        const _$errorElement = _$formSectionElement.querySelector('.popup__input-error');
-        _$errorElement.textContent = '';
-        _$errorElement.classList.remove(this._objectOptions.errorClass);
-        inputElement.classList.remove(this._objectOptions.inputErrorClass);
+        const _$formSectionElement = inputElement.closest('.popup__section')
+        const _$errorElement = _$formSectionElement.querySelector('.popup__input-error')
+        _$errorElement.textContent = ''
+        _$errorElement.classList.remove(this._objectOptions.errorClass)
+        inputElement.classList.remove(this._objectOptions.inputErrorClass)
     }
+
+    resetValidation() {
+        this._$inputList.forEach((inputElement) => {
+          this._hideInputError(inputElement) 
+        })
+  
+        this._toggleButtonState()
+      }
+  
     //Функция для проверки инпутов на валидность
     _checkInputValidity(inputElement) {
         const isInputNotValid = !inputElement.validity.valid
