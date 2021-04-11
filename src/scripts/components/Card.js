@@ -1,7 +1,5 @@
-// import { openPopup, imagePopupPhoto, imagePopupTitle, imagePopup } from './index.js'
-
 export default class Card {
-    constructor(name, link, selector, handleCardClick) {
+    constructor({ name, link }, selector, handleCardClick) {
         this._name = name
         this._link = link
         this._$selector = selector

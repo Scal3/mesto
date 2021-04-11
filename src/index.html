@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="pages/index.css">
-  <script src="scripts/initial-сards.js" defer></script>
-  <script src="scripts/validate.js" defer></script>
 </head>
 <body class="page">
   <!-- header с логотипом -->
@@ -17,7 +14,7 @@
     <!-- секция профиля -->
     <section class="profile profile_top_margin">
       <div class="profile__xl-container">
-        <img src="./images/profile-image.jpg" alt="фото профиля" class="profile__avatar">
+        <img src="<%=require('./images/profile-image.jpg')%>" alt="фото профиля" class="profile__avatar">
         <div class="profile__xl-container-without-img">
           <div class="profile__name-and-button">
             <h1 class="profile__name">Жак&#8209;Ив Кусто</h1>
@@ -93,8 +90,5 @@
     </div>
   </template>
   
-  <script src="scripts/index.js" type="module"></script> -->
-  <script src="scripts/FormValidator.js" type="module"></script>
-  <script src="scripts/Card.js" type="module"></script>
 </body>
 </html> 
