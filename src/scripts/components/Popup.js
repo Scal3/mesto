@@ -1,20 +1,19 @@
 export default class Popup {
     constructor(selector) {
         this._$selector = document.querySelector(selector)
+        this._closePopup = {
+            escBtn: this._handleEscClose.bind(this),
+          }
     }
 
     open() {
         this._$selector.classList.add('popup_opened')
-        document.addEventListener('keyup', (evt) => {
-            this._handleEscClose(evt)
-        })
+        document.addEventListener('keyup', this._closePopup.escBtn)
     }
 
     close() {
         this._$selector.classList.remove('popup_opened')
-        document.removeEventListener('keyup', (evt) => {
-            this._handleEscClose(evt)
-        })
+        document.removeEventListener('keyup', this._closePopup.escBtn)
     }
 
     _handleEscClose(evt) {

@@ -4,6 +4,8 @@ export default class Card {
         this._link = link
         this._$selector = selector
         this._handleCardClick = handleCardClick
+        this._element = this._getTemplate()
+        this._image = this._element.querySelector('.card__image')
     }
     // Функция для возврата темплейт элемента
     _getTemplate() {
@@ -36,19 +38,18 @@ export default class Card {
             this._handleDeleteCard(evt)
         })
         // Слушатель для открытия попапа с картинкой
-        this._element.querySelector('.card__image').addEventListener('click', () => {
+        this._image.addEventListener('click', () => {
             this._handleCardClick(this._name, this._link)
         })
     }
     // Функция для создания карточки
     generateCard() {
-        // Запишем разметку в _element. 
-        this._element = this._getTemplate()
+        // Навешиваем слушатели
         this._setEventListeners()
 
         // Добавим данные
-        this._element.querySelector('.card__image').src = this._link
-        this._element.querySelector('.card__image').alt = this._name
+        this._image.src = this._link
+        this._image.alt = this._name
         this._element.querySelector('.card__title').textContent = this._name
 
         // Вернём элемент наружу

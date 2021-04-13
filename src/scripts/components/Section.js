@@ -5,11 +5,11 @@ export default class Section {
         this._$container = document.querySelector(selector)
     }
     //апендим готовый элемент в нужный контейнер
-    addItem(element) {
+    appendItem(element) {
         this._$container.append(element)
     }
     //препендим новый элемент в нужный контейнер
-    addNewItem(element) {
+    prependItem(element) {
         this._$container.prepend(element)
     }
     //применяем функцию отрисовки для каждой карточки
