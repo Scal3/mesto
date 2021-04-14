@@ -5,34 +5,29 @@ import Section from '../scripts/components/Section.js'
 import PopupWithForm from '../scripts/components/PopupWithForm.js'
 import PopupWithImage from '../scripts/components/PopupWithImage.js'
 import UserInfo from '../scripts/components/UserInfo.js'
-import { profilePopupButton, cardAddButton, typeName, typeJob, validationConfig, cardForm, profileForm , templateSelector} from '../scripts/utils/constants.js'
+import {
+  profilePopupButton, cardAddButton, typeName, typeJob, validationConfig, cardForm, profileForm, templateSelector, inputNameSelector
+  , inputJobSelector, selectorPopupTypeProfile, selectorPopupTypeCard, selectorPopupTypeImage
+} from '../scripts/utils/constants.js'
 import { initialCards } from '../scripts/utils/initial-сards.js'
 
 
-
-function editProfileFormValidator() {
-    const formValidator = new FormValidator(validationConfig, profileForm)
-    formValidator.enableValidation()
-    profileForm.addEventListener('submit', handleFormSubmit)
-    cardAddButton.addEventListener('click', () => formValidator.resetValidation())
-    profilePopupButton.addEventListener('click', () => formValidator.resetValidation())
-}
-
-function addCardFormValidator() {
-    const formValidator = new FormValidator(validationConfig, cardForm)
-    formValidator.enableValidation()
-    cardForm.addEventListener('submit', handleFormSubmit)
-    cardAddButton.addEventListener('click', () => formValidator.resetValidation())
-    profilePopupButton.addEventListener('click', () => formValidator.resetValidation())
-}
 
 function handleFormSubmit(event) {
   event.preventDefault()
 }
 
-function setProfileInputs() {
-  typeName.value = userInfo.getUserInfo().name;
-  typeJob.value = userInfo.getUserInfo().info;
+function handleProfilePopup() {
+  popupEditProfile.open()
+  profileFormValidator.resetValidation()
+  typeName.value = userInfo.getUserInfo().name
+  typeJob.value = userInfo.getUserInfo().info
+  console.log('Я сработала')
+}
+
+function handleCardPopup() {
+  popupAddCard.open()
+  cardFormValidator.resetValidation()
 }
 
 function createCard(item, template, handleCardClick) {
@@ -52,41 +47,45 @@ const cardSection = new Section({
 }, '.cards')
 
 const userInfo = new UserInfo({
-  nameSelector: '.profile__name',
-  infoSelector: '.profile__job'
+  nameSelector: inputNameSelector,
+  infoSelector: inputJobSelector
 })
 
-const popupIEditProfile = new PopupWithForm({
-  _$selector: '.popup_type_profile', handleFormSubmit: (values) => {
+const popupEditProfile = new PopupWithForm({
+  _$selector: selectorPopupTypeProfile, handleFormSubmit: (values) => {
     userInfo.setUserInfo({ name: values.name, info: values.job })
-    popupIEditProfile.close()
+    popupEditProfile.close()
   }
 })
 
-const popupIAddCard = new PopupWithForm({
-  _$selector: '.popup_type_card', handleFormSubmit: (values) => {
+const popupAddCard = new PopupWithForm({
+  _$selector: selectorPopupTypeCard, handleFormSubmit: (values) => {
     const newCard = createCard({ name: values.name, link: values.link }, templateSelector, () => {
       popupImage.open(values)
     })
     cardSection.prependItem(newCard)
-    popupIAddCard.close()
+    popupAddCard.close()
   }
 })
 
-const popupImage = new PopupWithImage('.popup_type_image')
+const popupImage = new PopupWithImage(selectorPopupTypeImage)
+
+const profileFormValidator = new FormValidator(validationConfig, profileForm)
+
+const cardFormValidator = new FormValidator(validationConfig, cardForm)
 
 
 
-profilePopupButton.addEventListener('click', () => popupIEditProfile.open())
-profilePopupButton.addEventListener('click', setProfileInputs)
-profilePopupButton.addEventListener('click', () => setProfileInputs())
-cardAddButton.addEventListener('click', () => popupIAddCard.open())
-popupIEditProfile.setEventListeners()
-popupIAddCard.setEventListeners()
+popupEditProfile.setEventListeners()
+popupAddCard.setEventListeners()
 popupImage.setEventListeners()
+profileForm.addEventListener('submit', handleFormSubmit)
+cardForm.addEventListener('submit', handleFormSubmit)
+profilePopupButton.addEventListener('click', () => handleProfilePopup())
+cardAddButton.addEventListener('click', () => handleCardPopup())
 
 
 
-editProfileFormValidator()
-addCardFormValidator()
+profileFormValidator.enableValidation()
+cardFormValidator.enableValidation()
 cardSection.renderItems()

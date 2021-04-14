@@ -24,12 +24,12 @@ export default class FormValidator {
 
     resetValidation() {
         this._$inputList.forEach((inputElement) => {
-          this._hideInputError(inputElement) 
+            this._hideInputError(inputElement)
         })
-  
+
         this._toggleButtonState()
-      }
-  
+    }
+
     //Функция для проверки инпутов на валидность
     _checkInputValidity(inputElement) {
         const isInputNotValid = !inputElement.validity.valid
