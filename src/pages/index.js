@@ -13,16 +13,19 @@ import { initialCards } from '../scripts/utils/initial-сards.js'
 
 
 
-function handleFormSubmit(event) {
-  event.preventDefault()
-}
-
 function handleProfilePopup() {
   popupEditProfile.open()
-  profileFormValidator.resetValidation()
   typeName.value = userInfo.getUserInfo().name
   typeJob.value = userInfo.getUserInfo().info
-  console.log('Я сработала')
+}
+
+function enableProfileFormValidation() {
+  profileFormValidator.enableValidation()
+  profilePopupButton.addEventListener('click', () => profileFormValidator.resetValidation())
+}
+
+function handleFormSubmit(event) {
+  event.preventDefault()
 }
 
 function handleCardPopup() {
@@ -86,6 +89,7 @@ cardAddButton.addEventListener('click', () => handleCardPopup())
 
 
 
-profileFormValidator.enableValidation()
 cardFormValidator.enableValidation()
 cardSection.renderItems()
+enableProfileFormValidation()
+
