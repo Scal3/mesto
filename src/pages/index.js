@@ -17,11 +17,7 @@ function handleProfilePopup() {
   popupEditProfile.open()
   typeName.value = userInfo.getUserInfo().name
   typeJob.value = userInfo.getUserInfo().info
-}
-
-function enableProfileFormValidation() {
-  profileFormValidator.enableValidation()
-  profilePopupButton.addEventListener('click', () => profileFormValidator.resetValidation())
+  profileFormValidator.resetValidation()
 }
 
 function handleFormSubmit(event) {
@@ -90,6 +86,5 @@ cardAddButton.addEventListener('click', () => handleCardPopup())
 
 
 cardFormValidator.enableValidation()
+profileFormValidator.enableValidation()
 cardSection.renderItems()
-enableProfileFormValidation()
-
