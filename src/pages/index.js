@@ -10,8 +10,12 @@ import {
   , inputJobSelector, selectorPopupTypeProfile, selectorPopupTypeCard, selectorPopupTypeImage
 } from '../scripts/utils/constants.js'
 import { initialCards } from '../scripts/utils/initial-сards.js'
+import Api from '../scripts/components/Api.js'
 
-
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-24',
+  token: '997275f5-db75-4740-889c-9561326b8f49'
+})
 
 function handleProfilePopup() {
   popupEditProfile.open()
