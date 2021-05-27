@@ -11,7 +11,7 @@ import {
   profileForm, templateSelector, inputNameSelector, 
   inputJobSelector, selectorPopupTypeProfile, selectorPopupTypeCard, 
   selectorPopupTypeImage, userAvatarSelector, cardInputTypeTitle, 
-  cardInputTypeLink
+  cardInputTypeLink,
 } from '../scripts/utils/constants.js'
 import { initialCards } from '../scripts/utils/initial-сards.js'
 import Api from '../scripts/components/Api.js'
@@ -33,8 +33,8 @@ function handleCardPopup() {
   cardFormValidator.resetValidation()
 }
 
-function createCard(item, template, handleCardClick) {
-  const card = new Card(item, template, handleCardClick)
+function createCard({ name, link, likes}, template, handleCardClick) {
+  const card = new Card({ name, link, likes}, template, handleCardClick)
   const cardElement = card.generateCard()
   return cardElement
 }
@@ -46,13 +46,14 @@ api.getCards()
     const cardSection = new Section({
       items: result,
       renderer: (result) => {
-        const cardElement = createCard(result, templateSelector, () => {
+        const cardElement = createCard({ name: result.name, link: result.link, likes: result.likes.length}, templateSelector, () => {
           popupImage.open(result)
         })
         cardSection.appendItem(cardElement)
       }
     }, '.cards')
     cardSection.renderItems()
+    console.log(result)
   })
   .catch(e => console.log(`Ошибка при получении карточек: ${e}`))
 

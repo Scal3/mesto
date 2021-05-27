@@ -1,11 +1,13 @@
 export default class Card {
-    constructor({ name, link }, selector, handleCardClick) {
+    constructor({ name, link, likes}, selector, handleCardClick) {
         this._name = name
         this._link = link
+        this._like = likes
         this._$selector = selector
         this._handleCardClick = handleCardClick
-        this._element = this._getTemplate()
-        this._image = this._element.querySelector('.card__image')
+        this._$element = this._getTemplate()
+        this._image = this._$element.querySelector('.card__image')
+        this._likeCounter = this._$element.querySelector('.card__like-counter')
     }
     // Функция для возврата темплейт элемента
     _getTemplate() {
@@ -30,11 +32,11 @@ export default class Card {
     //Функция устанавливающая слушатели
     _setEventListeners() {
         // Слушатель для лайка
-        this._element.querySelector('.card__like-button').addEventListener('click', (evt) => {
+        this._$element.querySelector('.card__like-button').addEventListener('click', (evt) => {
             this._addLike(evt)
         })
         // Слушатель для удаления карточки
-        this._element.querySelector('.card__delete-button').addEventListener('click', (evt) => {
+        this._$element.querySelector('.card__delete-button').addEventListener('click', (evt) => {
             this._handleDeleteCard(evt)
         })
         // Слушатель для открытия попапа с картинкой
@@ -50,9 +52,10 @@ export default class Card {
         // Добавим данные
         this._image.src = this._link
         this._image.alt = this._name
-        this._element.querySelector('.card__title').textContent = this._name
+        this._likeCounter.textContent = this._like
+        this._$element.querySelector('.card__title').textContent = this._name
 
         // Вернём элемент наружу
-        return this._element
+        return this._$element
     }
 }
