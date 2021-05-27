@@ -10,7 +10,7 @@ export default class Api {
         authorization: this._token
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+      .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   getUserData() { //ПОЛУЧИТЬ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
@@ -19,7 +19,7 @@ export default class Api {
         authorization: this._token
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+      .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   editProfileInfo({name, about}) {  //ИЗМЕНИТЬ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
@@ -34,7 +34,7 @@ export default class Api {
         about: about
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   addNewCard({name, link}) {  //ДОБАВИТЬ НОВУЮ КАРТОЧКУ
@@ -49,7 +49,7 @@ export default class Api {
         link: link
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   deleteCard(id) {  //УДАЛИТЬ КАРТОЧКУ
@@ -59,7 +59,7 @@ export default class Api {
           authorization: this._token,
       }
   })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   addLike(id) { //ПОСТАВИТЬ ЛАЙК
@@ -69,7 +69,7 @@ export default class Api {
           authorization: this._token,
       }
   })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   removeLike(id) {  //УБРАТЬ ЛАЙК
@@ -79,7 +79,7 @@ export default class Api {
           authorization: this._token,
       }
   })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   edidProfileAvatar(avatar) { //ИЗМЕНИТЬ ФОТО ПРОФИЛЯ
@@ -93,7 +93,7 @@ export default class Api {
         avatar: avatar
       })
     })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 }
 
