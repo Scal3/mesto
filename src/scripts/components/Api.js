@@ -10,7 +10,7 @@ export default class Api {
         authorization: this._token
       }
     })
-      .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
+    .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
   getUserData() { //ПОЛУЧИТЬ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
@@ -38,7 +38,7 @@ export default class Api {
     .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
-  addNewCard({name, link, owner}) {  //ДОБАВИТЬ НОВУЮ КАРТОЧКУ
+  addNewCard({name, link}) {  //ДОБАВИТЬ НОВУЮ КАРТОЧКУ
     return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: {
@@ -48,7 +48,6 @@ export default class Api {
       body: JSON.stringify({
         name: name,
         link: link,
-        owner: owner
       })
     })
     .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
@@ -64,8 +63,8 @@ export default class Api {
     .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
-  addLike(id) { //ПОСТАВИТЬ ЛАЙК
-    return fetch(`${this._url}/cards/likes/${id}`, {
+  addLike(card) { //ПОСТАВИТЬ ЛАЙК
+    return fetch(`${this._url}/cards/likes/${card._id}`, {
       method: 'PUT',
       headers: {
           authorization: this._token,
@@ -74,8 +73,8 @@ export default class Api {
     .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
-  removeLike(id) {  //УБРАТЬ ЛАЙК
-    return fetch(`${this._url}/cards/likes/${id}`, {
+  removeLike(card) {  //УБРАТЬ ЛАЙК
+    return fetch(`${this._url}/cards/likes/${card._id}`, {
       method: 'DELETE',
       headers: {
           authorization: this._token,
