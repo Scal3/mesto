@@ -1,8 +1,9 @@
 export default class Card {
-    constructor({ name, link, likes}, selector, handleCardClick) {
+    constructor({ name, link, likes, id}, selector, handleCardClick) {
         this._name = name
         this._link = link
         this._like = likes
+        this._id = id
         this._$selector = selector
         this._handleCardClick = handleCardClick
         this._$element = this._getTemplate()
@@ -22,6 +23,9 @@ export default class Card {
     // Функция для переключения лайка
     _addLike(evt) {
         evt.target.classList.toggle('card__like-button_active')
+    }
+    getId() {
+        return this._id
     }
     // Функция для удаления карточки
     _handleDeleteCard(evt) {

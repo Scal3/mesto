@@ -44,7 +44,7 @@
           </div>
 
           <div class="popup__section">
-            <input type="text" required class="popup__input popup__input_type_job" value="" name="job" placeholder="Введите вашу профессию" minlength="2" maxlength="200">
+            <input type="text" required class="popup__input popup__input_type_job" value="" name="about" placeholder="Введите вашу профессию" minlength="2" maxlength="200">
             <span class="popup__input-error popup__input-error_position_dawn"></span>
           </div>
           <button type="submit" class="popup__submit">Сохранить</button>
@@ -79,8 +79,18 @@
     <h2 class="image-popup__title"></h2>
     </div>
   </div>
+  <div class="popup popup_type_remove">
+    <div class="popup__container">
+      <h2 class="popup__heading">Вы уверены?</h2>
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      <form class="popup__form" name="form-edit-remove" novalidate>
+        <button type="submit" class="popup__submit">Да</button>
+      </form>
+    </div>
+  </div>
   <template class="template">
     <div class="card card_margin_bottom">
+      <!-- <button class="card__delete-button hidden" type="button"></button> -->
       <button class="card__delete-button" type="button"></button>
       <img src="image" alt="image" class="card__image">
       <div class="card__title-and-button">

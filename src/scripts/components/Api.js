@@ -22,7 +22,7 @@ export default class Api {
       .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
-  editProfileInfo({name, about}) {  //ИЗМЕНИТЬ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
+  editProfileInfo({name, about, owner}) {  //ИЗМЕНИТЬ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -31,13 +31,14 @@ export default class Api {
       },
       body: JSON.stringify({
         name: name,
-        about: about
+        about: about,
+        owner: owner
       })
     })
     .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
-  addNewCard({name, link}) {  //ДОБАВИТЬ НОВУЮ КАРТОЧКУ
+  addNewCard({name, link, owner}) {  //ДОБАВИТЬ НОВУЮ КАРТОЧКУ
     return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: {
@@ -46,7 +47,8 @@ export default class Api {
       },
       body: JSON.stringify({
         name: name,
-        link: link
+        link: link,
+        owner: owner
       })
     })
     .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))

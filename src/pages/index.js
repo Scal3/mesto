@@ -10,8 +10,7 @@ import {
   typeJob, validationConfig, cardForm, 
   profileForm, templateSelector, inputNameSelector, 
   inputJobSelector, selectorPopupTypeProfile, selectorPopupTypeCard, 
-  selectorPopupTypeImage, userAvatarSelector, cardInputTypeTitle, 
-  cardInputTypeLink,
+  selectorPopupTypeImage, userAvatarSelector,
 } from '../scripts/utils/constants.js'
 import { initialCards } from '../scripts/utils/initial-сards.js'
 import Api from '../scripts/components/Api.js'
@@ -33,69 +32,75 @@ function handleCardPopup() {
   cardFormValidator.resetValidation()
 }
 
-function createCard({ name, link, likes}, template, handleCardClick) {
-  const card = new Card({ name, link, likes}, template, handleCardClick)
+function createCard({ name, link, likes, id}, template, handleCardClick) {
+  const card = new Card({ name, link, likes, id}, template, handleCardClick)
   const cardElement = card.generateCard()
   return cardElement
 }
 
-
-//ЗАГРУЗКА КАРТОЧЕК С СЕРВЕРА
-api.getCards()
-  .then(result => {
-    const cardSection = new Section({
-      items: result,
-      renderer: (result) => {
-        const cardElement = createCard({ name: result.name, link: result.link, likes: result.likes.length}, templateSelector, () => {
-          popupImage.open(result)
-        })
-        cardSection.appendItem(cardElement)
-      }
-    }, '.cards')
-    cardSection.renderItems()
-    console.log(result)
-  })
-  .catch(e => console.log(`Ошибка при получении карточек: ${e}`))
+const cardSection = new Section({
+  renderer: item => {
+    const generatedCard = createCard(
+      { name: item.name, link: item.link, likes: item.likes.length, id:user.owner }, 
+      templateSelector, 
+      () => { popupImage.open(item) })
+    cardSection.setItem(generatedCard, true);
+  }
+},'.cards');
 
 
-//ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ЮЗЕРЕ
 let user = null
-api.getUserData()
-  .then(userData => {
+Promise.all([api.getUserData(), api.getCards()])
+  .then(([userData, cards]) => {
+    //ПОЛУЧЕНИЕ ИНФОРМАЦИИ О ЮЗЕРЕ
     user = userData
-    userInfo.setUserInfo({ name: user.name, info: user.about , avatar: user.avatar})
-  })
-  .catch(e => console.log(`Ошибка при получении информации: ${e}`))
+    userInfo.setUserInfo({
+      name: user.name,
+      info: user.about ,
+      avatar: user.avatar,
+      userId: user._id})
+
+    //ЗАГРУЗКА КАРТОЧЕК С СЕРВЕРА
+    cardSection.renderItems(cards)
+})
+  .catch(e => console.log(`Ошибка при получении данных: ${e}`))
 
 
 //РЕДАКТИРОВАНИЕ ИНФОРМАЦИИ О ЮЗЕРЕ
-function setUserData() {
-  api.editProfileInfo({name: typeName.value, about: typeJob.value})
-    .then(res => {
-      userInfo.setUserInfo({ name: res.name, info: res.about , avatar: res.avatar})
+const popupEditProfile = new PopupWithForm({_$selector: selectorPopupTypeProfile, 
+  handleFormSubmit: ({name, about}) => {
+    api.editProfileInfo({
+      name, 
+      about,
+      owner: user._id
+    })
+    .then(result => {
+      userInfo.setUserInfo({ name: result.name, about: result.about , avatar: result.avatar})//ДОДЕЛАТЬ!!!!!!!!!!!!!!
       popupEditProfile.close()
     })
     .catch(e => console.log(`Ошибка при редактировании профиля: ${e}`))
-}
-profileForm.addEventListener('submit', setUserData)
+  }
+})
 
 
 //ДОБАВЛЕНИЕ НОВОЙ КАРТОЧКИ 
-function addCard() {
-  api.addNewCard({name: cardInputTypeTitle.value, link: cardInputTypeLink.value})
-    .then(res => {
-      const cardSection = new Section({
-        items: '',
-        renderer: () => {}
-      }, '.cards')
-      const newCard = createCard({name: res.name, link: res.link}, templateSelector, () => {
-        popupImage.open(res)
+const popupAddCard = new PopupWithForm({_$selector: selectorPopupTypeCard, 
+  handleFormSubmit: ({name, link}) => {
+    api.addNewCard({
+      name, 
+      link, 
+      owner: user._id
+    })
+    .then(result => {
+      const newCard = createCard({name: result.name, link: result.link}, templateSelector, () => {
+        popupImage.open(result)
       })
-      cardSection.prependItem(newCard)
+      cardSection.setItem(newCard, false)
       popupAddCard.close()
     })
     .catch(e => console.log(`Ошибка при добавлении карточки: ${e}`))
-}
+    }})
+
 
 const userInfo = new UserInfo({
   nameSelector: inputNameSelector,
@@ -103,9 +108,6 @@ const userInfo = new UserInfo({
   avatarSelector: userAvatarSelector
 })
 
-const popupEditProfile = new PopupWithForm({_$selector: selectorPopupTypeProfile})
-
-const popupAddCard = new PopupWithForm({_$selector: selectorPopupTypeCard})
 
 const popupImage = new PopupWithImage(selectorPopupTypeImage)
 
@@ -118,7 +120,6 @@ const cardFormValidator = new FormValidator(validationConfig, cardForm)
 popupEditProfile.setEventListeners()
 popupAddCard.setEventListeners()
 popupImage.setEventListeners()
-cardForm.addEventListener('submit', addCard)
 profilePopupButton.addEventListener('click', () => handleProfilePopup())
 cardAddButton.addEventListener('click', handleCardPopup)
 
