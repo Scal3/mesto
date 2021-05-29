@@ -79,11 +79,26 @@
     <h2 class="image-popup__title"></h2>
     </div>
   </div>
-  <div class="popup popup_type_remove">
+  <div class="popup popup_type_avatar">
     <div class="popup__container">
-      <h2 class="popup__heading">Вы уверены?</h2>
       <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
-      <form class="popup__form" name="form-edit-remove" novalidate>
+      <h2 class="popup__heading">Обновить аватар</h2>
+      <form class="popup__form popup__type_avatar" name="form-avatar" method="POST" action="#" novalidate autocomplete="off">
+        <fieldset class="popup__set">
+          <div class="popup__section">
+            <input type="url" required class="popup__input popup__input_type_update-link" value="" name="link" placeholder="Ссылка на картинку">
+            <span class="popup__input-error popup__input-error_position_up"></span>
+          </div>
+          <button type="submit" class="popup__submit">Сохранить</button>
+      </fieldset>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_type_remove">
+    <div class="popup__container popup__container_type_remove">
+      <h2 class="popup__heading popup__heading_type_remove">Вы уверены?</h2>
+      <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+      <form class="popup__form popup__type_remove" name="form-remove" method="POST" action="#" novalidate autocomplete="off">
         <button type="submit" class="popup__submit">Да</button>
       </form>
     </div>

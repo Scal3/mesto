@@ -6,6 +6,23 @@ export const validationConfig = {
     fieldSetSelector: '.popup__set',
     errorClass: 'popup__input-error_active'
 }
+
+
+export const submitBtnTexts = {
+    current: {
+      'form-avatar': 'Сохранить',
+      'card-form': 'Создать',
+      'profile-form': 'Сохранить',
+      'form-remove': 'Да',
+    },
+    changed: {
+      'form-avatar': 'Сохранение...',
+      'card-form': 'Добавление...',
+      'profile-form': 'Сохранение...',
+      'form-remove': 'Удаление...',
+    }
+  }
+
 export const profilePopupButton = document.querySelector('.profile__edit-button')
 export const cardAddButton = document.querySelector('.profile__add-button')
 export const typeName = document.querySelector('.popup__input_type_name')
@@ -19,3 +36,7 @@ export const userAvatarSelector = '.profile__avatar'
 export const selectorPopupTypeProfile = '.popup_type_profile'
 export const selectorPopupTypeCard = '.popup_type_card'
 export const selectorPopupTypeImage = '.popup_type_image'
+export const selectorPopupTypeAvatar = '.popup_type_avatar'
+export const selectorPopupTypeRemove = '.popup_type_remove'
+export const avatarBtn = document.querySelector('.profile__avatar')
+export const avatarForm = document.querySelector('.popup_type_avatar')

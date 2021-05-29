@@ -6,6 +6,7 @@
     margin: 0 auto 22.25px auto;
     object-fit: cover;
     object-position: center;
+    
 }
 
 @media screen and (min-width: 880px) {
@@ -14,3 +15,10 @@
         margin-bottom: 0;
     }
 }
+
+.profile__avatar:hover {
+    color: #000;
+    opacity: 0.2;
+    cursor: url('../../../images/test.svg'), move;
+}
+

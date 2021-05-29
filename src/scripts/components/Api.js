@@ -22,7 +22,7 @@ export default class Api {
       .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
   }
 
-  editProfileInfo({name, about, owner}) {  //ИЗМЕНИТЬ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
+  editProfileInfo({name, about}) {  //ИЗМЕНИТЬ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -32,7 +32,6 @@ export default class Api {
       body: JSON.stringify({
         name: name,
         about: about,
-        owner: owner
       })
     })
     .then(res => res.ok ? res.json() : Promise.reject(`${res.status}`))
