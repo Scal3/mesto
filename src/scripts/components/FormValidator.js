@@ -70,7 +70,6 @@ export default class FormValidator {
     }
     //Функция для включения валидации
     enableValidation() {
-        const fieldSetList = Array.from(this._$form.querySelectorAll(this._validationConfig.fieldSetSelector))
-        fieldSetList.forEach(() => this._setEventListeners())
+        this._setEventListeners()
     }
 }

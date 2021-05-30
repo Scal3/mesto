@@ -122,7 +122,7 @@ const popupEditProfile = new PopupWithForm(
         about,
       })
       .then((result) => {
-        userInfo.setUserInfo({ name: result.name, info: result.about, avatar: result.avatar }); //ДОДЕЛАТЬ!!!!!!!!!!!!!!
+        userInfo.setUserInfo({ name: result.name, info: result.about, avatar: result.avatar });
         popupEditProfile.close();
       })
       .catch((e) => console.log(`Ошибка при редактировании профиля: ${e}`));
@@ -142,7 +142,6 @@ const popupAddCard = new PopupWithForm(
       })
       .catch(() => {
         console.log("Ошибка адреса");
-        popupAddCard.close();
       });
   },
 });
@@ -177,7 +176,7 @@ function addCardApi(values) {
 function changeAvatarApi(values) {
   api.edidProfileAvatar(values.link)
   .then((result) => {
-    userInfo.setUserInfo(result);
+    userInfo.setUserInfo({ name: result.name, info: result.about, avatar: result.avatar });
     popupAvatar.close();
   })
   .catch((e) => console.log(`Ошибка при смене аватара: ${e}`));
@@ -196,7 +195,6 @@ const popupAvatar = new PopupWithForm(
     })
     .catch(() => {
       console.log("Ошибка адреса");
-      popupAvatar.close();
     });
   }
 
