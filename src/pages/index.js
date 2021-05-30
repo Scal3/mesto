@@ -5,6 +5,7 @@ import Section from "../scripts/components/Section.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import UserInfo from "../scripts/components/UserInfo.js";
+import PopupError from "../scripts/components/PopupError.js";
 import { 
   profilePopupButton,
   cardAddButton,
@@ -24,7 +25,8 @@ import {
   avatarBtn,
   avatarForm,
   selectorPopupTypeRemove,
-  submitBtnTexts
+  submitBtnTexts,
+  selectorPopupTypeError
 } from "../scripts/utils/constants.js";
 import Api from "../scripts/components/Api.js";
 
@@ -108,7 +110,10 @@ Promise.all([api.getUserData(), api.getCards()])
     //ЗАГРУЗКА КАРТОЧЕК С СЕРВЕРА
     cardSection.renderItems(cards);
   })
-  .catch((e) => console.log(`Ошибка при получении данных: ${e}`));
+  .catch((e) => {
+    popupError.open()
+    popupError.setErrorMessage(`Ошибка при получении данных: ${e}`)
+  });
 
 
 //РЕДАКТИРОВАНИЕ ИНФОРМАЦИИ О ЮЗЕРЕ
@@ -125,7 +130,11 @@ const popupEditProfile = new PopupWithForm(
         userInfo.setUserInfo({ name: result.name, info: result.about, avatar: result.avatar });
         popupEditProfile.close();
       })
-      .catch((e) => console.log(`Ошибка при редактировании профиля: ${e}`));
+      .catch((e) => {
+        popupEditProfile.close()
+        popupError.open()
+        popupError.setErrorMessage(`Ошибка при редактировании профиля: ${e}`)
+      });
   },
 });
 
@@ -141,7 +150,9 @@ const popupAddCard = new PopupWithForm(
         addCardApi(values);
       })
       .catch(() => {
-        console.log("Ошибка адреса");
+        popupAddCard.close()
+        popupError.open()
+        popupError.setErrorMessage('Ошибка адреса')
       });
   },
 });
@@ -168,7 +179,11 @@ function addCardApi(values) {
       cardSection.setItem(generatedCard, false);
       popupAddCard.close();
     })
-    .catch((e) => console.log(`Ошибка при добавлении карточки: ${e}`));
+    .catch((e) => {
+      popupAddCard.close()
+      popupError.open()
+      popupError.setErrorMessage(`Ошибка при добавлении карточки: ${e}`)
+    });
 }
 
 
@@ -179,7 +194,11 @@ function changeAvatarApi(values) {
     userInfo.setUserInfo({ name: result.name, info: result.about, avatar: result.avatar });
     popupAvatar.close();
   })
-  .catch((e) => console.log(`Ошибка при смене аватара: ${e}`));
+  .catch((e) => {
+    popupAvatar.close()
+    popupError.open()
+    popupError.setErrorMessage(`Ошибка при смене аватара: ${e}`)
+  });
 }
 
 
@@ -194,7 +213,9 @@ const popupAvatar = new PopupWithForm(
       changeAvatarApi(values);
     })
     .catch(() => {
-      console.log("Ошибка адреса");
+      popupAvatar.close()
+      popupError.open()
+      popupError.setErrorMessage('Ошибка адреса')
     });
   }
 
@@ -212,7 +233,11 @@ const popupRemoveCard = new PopupWithForm(
         cardForDel.handleDeleteCard();
         popupRemoveCard.close();
       })
-      .catch((e) => console.log(`Ошибка при удалении карточки: ${e}`));
+      .catch((e) => {
+        popupRemoveCard.close()
+        popupError.open()
+        popupError.setErrorMessage(`Ошибка при удалении карточки: ${e}`)
+      });
   }
 });
 
@@ -223,6 +248,8 @@ const userInfo = new UserInfo({
   infoSelector: inputJobSelector,
   avatarSelector: userAvatarSelector,
 });
+
+const popupError = new PopupError(selectorPopupTypeError);
 
 const popupImage = new PopupWithImage(selectorPopupTypeImage);
 
@@ -235,6 +262,7 @@ const avatarFormValidator = new FormValidator(validationConfig, avatarForm);
 popupEditProfile.setEventListeners();
 popupAddCard.setEventListeners();
 popupImage.setEventListeners();
+popupError.setEventListeners();
 popupRemoveCard.setEventListeners();
 profilePopupButton.addEventListener("click", () => handleProfilePopup());
 cardAddButton.addEventListener("click", handleCardPopup);

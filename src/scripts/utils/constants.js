@@ -38,5 +38,6 @@ export const selectorPopupTypeCard = '.popup_type_card'
 export const selectorPopupTypeImage = '.popup_type_image'
 export const selectorPopupTypeAvatar = '.popup_type_avatar'
 export const selectorPopupTypeRemove = '.popup_type_remove'
+export const selectorPopupTypeError = '.popup_type_error'
 export const avatarBtn = document.querySelector('.profile__avatar')
 export const avatarForm = document.querySelector('.popup_type_avatar')
